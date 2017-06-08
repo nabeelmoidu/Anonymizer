@@ -1,5 +1,5 @@
 '''
-Subscribe to Kafka topic that streams the Master OMS database,
+Subscribe to Kafka topic that streams the Master database,
 sanitize the data and replay it on the database
 for BI queries
 
