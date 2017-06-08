@@ -1,0 +1,37 @@
+Completed functions for anonymizer:
+
+1) Reads events from Kafka
+2) Constructs DML statements for replay
+3) Insert into downstream MySQL database
+
+
+V 1.0 :
+
+1) Handle DML changes in tables - Create/alter/drop
+2) Synchronize between multi table transactions ( use zookeeper ?)
+       set maxwell to partition by topic
+       first running client reads all partitions and puts it to zookeeper
+       each new client snatches a few partitions(tables) from the first such that the load is balanced
+       updated list put back to zookeeper
+       watch set for clients that lose connectivity or die
+       Two znodes for last committed transaction ID for table and last DDL
+       Upon DDL occurrence, commits after DDL TID are postponed till DDL is run.
+       Use zookeeper transaction feature for atomic operations (https://kazoo.readthedocs.io/en/latest/basic_usage.html#transactions)
+3) Resume from last known position in Kafka stream
+4) Cleanup formatting in script
+5) Caching rows before commit
+6) Setup standard logging with external config file
+7) Handle all possible errors in connections and calls
+
+V 2.0
+
+1) Be flexible for any downstream RDBMS/OLAP (Eg. Hive/Greenplum )
+2) Move to pySpark
+3) 
+
+
+===
+Scenarios :
+
+1) Multi table transaction rollback halfway
+2) Update rows with Primary Key previously hashed
