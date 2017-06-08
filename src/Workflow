@@ -1,0 +1,43 @@
+Sequence
+
+__main__.py - Set logging, daemonize, threading etc.
+
+        MYSQL_CONFIG_FILE,
+        KAFKA_CONFIG_FILE,
+        KAFKA_BINLOG_TOPIC,
+        KAFKA_CONN_RETRY_INTERVAL
+
+
+__init__.py - Initialize variables
+
+
+KafkaStreamReader.py      - Connect to Kafka and pull stream object
+IN
+	Kafka connection config, Kafka topic, retry interval
+OUT
+	Kafka Consumer object   
+
+ProcessEventStream.py     - Process stream object, iterate through events,  identify event type,  pass individual events to SanitizeDataStream class
+IN
+	Kafka Consumer object
+OUT
+	CDC Event, SQL Statement
+
+SanitizeDataStream.py     - Sanitize fields in event entries passed from ProcessEventStream, and pass them on to PersistSanitizedData to store permanently
+IN
+	SQL Statement
+OUT
+	Sanitized SQL statement
+
+PersistSanitizedData.py   - Store sanitized data into a permanent data store, currently only MySQL, later Hive/Greenplum etc.
+IN
+	Sanitized SQL statement
+OUT
+	Sanitized SQL statement 
+
+MySQLWriter.py            - Connect to MySQL, replay event into Database, update central status store (ZK) etc
+IN
+	MySQL Connection config, Sanitized SQL statement 
+OUT
+	SQL commit status
+

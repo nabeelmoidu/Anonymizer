@@ -1,0 +1,5 @@
+---
+:rules:
+  - 'hash_column db_name.table_name.user_property'
+  - 'hash_column db_name.table_name2.user_property3'
+  - 'hash_column db_name.table_name.user_property2'

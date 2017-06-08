@@ -1,0 +1,10 @@
+master:
+ host: <hostname>
+ user: <user_db_access>
+ passwd: <password>
+writer:
+ host: 127.0.0.1
+ user: <write_user>
+ password: <password>
+ charset: utf8
+ unix_socket: /anondb/data/mysql.sock
